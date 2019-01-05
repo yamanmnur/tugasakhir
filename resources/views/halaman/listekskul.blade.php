@@ -1,0 +1,250 @@
+
+
+  @extends('layouts.main')
+  @section('judulhalaman')
+    List Ekstrakulikuler
+@endsection
+@section('header')
+<div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
+  <div class="container-fluid">
+       
+    <div class="header-body">
+      <!-- Card stats -->
+      
+      <div class="row">
+        <?php $cek = null ?>
+        @foreach ($alldata as $item)
+            
+        
+        
+        <div class="col-xl-3 col-lg-6" style="margin-bottom:20px">
+          <div class="card card-stats mb-4 mb-xl-0">
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <h5 class="card-title text-uppercase text-muted mb-0">Traffic</h5>
+                  <span class="h2 font-weight-bold mb-0"> {{ $item->nama_ekskul }} </span>
+                </div>
+                <div class="col-auto">
+                  <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
+                    <i class="fas fa-chart-bar"></i>
+                  </div>
+                </div>
+              </div>
+
+                  @guest
+                    <p class="mt-3 mb-0 text-muted text-sm">
+
+                    <span class="text-nowrap"> <a href="{{ route('detailekskul',$item->kode_ekskul) }}" class="btn btn-info shadow" >detail</a> </span>
+                    </p>
+                  @else
+                        {{-- @if ()
+                            
+                        @else
+                            
+                        @endif --}}
+                          @foreach ($datauser as $it)
+                              @if ($it->kode_ekskul == $item->kode_ekskul)
+                                  <?php 
+                                  $cek = "ada" ;
+                                  break;
+                                  ?>
+                                  
+                              @else
+                              <?php $cek = 'tidakada' ?>
+                              @endif
+                          @endforeach
+                              
+                            @if ( $cek == "ada" )
+                              <p class="mt-3 mb-0 text-muted text-sm">
+                                <span class="text-success mr-2">
+
+                                  <a href="#" class="btn btn-warning shadow">Terdaftar</a> 
+                                </span>
+                                <span class="text-nowrap"> <a href="{{ route('detailekskul',$item->kode_ekskul) }}" class="btn btn-info shadow" >detail</a> </span>
+                              </p>
+                            @else
+                              <p class="mt-3 mb-0 text-muted text-sm">
+                                <div class="text-success mr-2">
+                                    <form action="{{ route('daftaranggota') }}" method="post"  >
+                                        @csrf
+                                      <input type="text"  name = "kode_ekskul"hidden style="display:none" value="{{ $item->kode_ekskul }}"  > 
+                                      <input type="text" name="nis" hidden style="display:none" value="{{ Auth::user()->nis }}"  > 
+                                      <button type="submit" class="btn btn-success shadow">Daftar!</button>
+                                    </form>
+                                  
+                                </div>
+                                <span class="text-nowrap"> <a href="{{ route('detailekskul',$item->kode_ekskul) }}" class="btn btn-info shadow" >detail</a> </span>
+                              </p>
+                            @endif
+                            @php
+                              $cek = null;  
+                            @endphp
+                  @endguest
+
+            </div>
+          </div>
+        </div>
+        <br>
+        @endforeach
+      </div>      
+
+      {{-- <div class="row">
+        <div class="col-xl-3 col-lg-6">
+          <div class="card card-stats mb-4 mb-xl-0">
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <h5 class="card-title text-uppercase text-muted mb-0">Traffic</h5>
+                  <span class="h2 font-weight-bold mb-0">350,897</span>
+                </div>
+                <div class="col-auto">
+                  <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
+                    <i class="fas fa-chart-bar"></i>
+                  </div>
+                </div>
+              </div>
+              <p class="mt-3 mb-0 text-muted text-sm">
+                <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
+                <span class="text-nowrap">Since last month</span>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-6">
+          <div class="card card-stats mb-4 mb-xl-0">
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <h5 class="card-title text-uppercase text-muted mb-0">New users</h5>
+                  <span class="h2 font-weight-bold mb-0">2,356</span>
+                </div>
+                <div class="col-auto">
+                  <div class="icon icon-shape bg-warning text-white rounded-circle shadow">
+                    <i class="fas fa-chart-pie"></i>
+                  </div>
+                </div>
+              </div>
+              <p class="mt-3 mb-0 text-muted text-sm">
+                <span class="text-danger mr-2"><i class="fas fa-arrow-down"></i> 3.48%</span>
+                <span class="text-nowrap">Since last week</span>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-6">
+          <div class="card card-stats mb-4 mb-xl-0">
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <h5 class="card-title text-uppercase text-muted mb-0">Sales</h5>
+                  <span class="h2 font-weight-bold mb-0">924</span>
+                </div>
+                <div class="col-auto">
+                  <div class="icon icon-shape bg-yellow text-white rounded-circle shadow">
+                    <i class="fas fa-users"></i>
+                  </div>
+                </div>
+              </div>
+              <p class="mt-3 mb-0 text-muted text-sm">
+                <span class="text-warning mr-2"><i class="fas fa-arrow-down"></i> 1.10%</span>
+                <span class="text-nowrap">Since yesterday</span>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-3 col-lg-6">
+          <div class="card card-stats mb-4 mb-xl-0">
+            <div class="card-body">
+              <div class="row">
+                <div class="col">
+                  <h5 class="card-title text-uppercase text-muted mb-0">Performance</h5>
+                  <span class="h2 font-weight-bold mb-0">49,65%</span>
+                </div>
+                <div class="col-auto">
+                  <div class="icon icon-shape bg-info text-white rounded-circle shadow">
+                    <i class="fas fa-percent"></i>
+                  </div>
+                </div>
+              </div>
+              <p class="mt-3 mb-0 text-muted text-sm">
+                <span class="text-success mr-2"><i class="fas fa-arrow-up"></i> 12%</span>
+                <span class="text-nowrap">Since last month</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div> --}}
+    </div>
+  </div>
+</div>
+@endsection
+@section('content')
+
+<button type="button" style="display:none" id="boraks" class="btn btn-block btn-warning mb-3" data-toggle="modal" data-target="#modal-notification">Notification</button>
+
+ 
+<div class="modal fade" id="modal-notification" tabindex="-1" role="dialog" aria-labelledby="modal-notification" aria-hidden="true">
+<div class="modal-dialog modal-danger modal-dialog-centered modal-" role="document">
+  <div class="modal-content bg-gradient-danger">
+    
+      <div class="modal-header">
+          <h6 class="modal-title" id="modal-title-notification">Your attention is required</h6>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+          </button>
+      </div>
+      
+      <div class="modal-body">
+        
+          <div class="py-3 text-center">
+              <i class="ni ni-bell-55 ni-3x"></i>
+              <h4 class="heading mt-4">Hai, Kamu belum Login!</h4>
+              <p>Silahkan Login dulu, agar dapat memakai semua fitur termasuk daftar menjadi anggota ekskul tertentu :).</p>
+          </div>
+          
+      </div>
+      
+      <div class="modal-footer">
+          <button type="button" id="login-modal" class="btn btn-white">Ok,Login dulu</button>
+          <button type="button" class="btn btn-link text-white ml-auto" data-dismiss="modal">Nanti saja, saya mau lihat-lihat</button> 
+      </div>
+      
+  </div>
+</div>
+</div>
+      
+<div class="container-fluid mt--7">
+         
+         
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="row align-items-center justify-content-xl-between">
+        <div class="col-xl-6">
+          <div class="copyright text-center text-xl-left text-muted">
+            © 2018 <a href="https://www.creative-tim.com" class="font-weight-bold ml-1" target="_blank">Creative Tim</a>
+          </div>
+        </div>
+        <div class="col-xl-6">
+          <ul class="nav nav-footer justify-content-center justify-content-xl-end">
+            <li class="nav-item">
+              <a href="https://www.creative-tim.com" class="nav-link" target="_blank">Creative Tim</a>
+            </li>
+            <li class="nav-item">
+              <a href="https://www.creative-tim.com/presentation" class="nav-link" target="_blank">About Us</a>
+            </li>
+            <li class="nav-item">
+              <a href="http://blog.creative-tim.com" class="nav-link" target="_blank">Blog</a>
+            </li>
+            <li class="nav-item">
+              <a href="https://github.com/creativetimofficial/argon-dashboard/blob/master/LICENSE.md" class="nav-link" target="_blank">MIT License</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+               
+
+  </div>
+@endsection
+
