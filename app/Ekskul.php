@@ -52,6 +52,13 @@ use Illuminate\Database\Eloquent\Model;
         $data = Ekskul::all();
         return $data;
     }
+    public function getDataEkskulUser3($nis)
+    {
+        $data = DB::table('tb_anggota_ekskul')
+                ->where('nis','=',$nis)
+                ->where('jabatan','=','ketua')->first();
+        return $data;
+    }
     public function getDataEkskulUser($nis)
     {
         $data = DB::table('tb_anggota_ekskul')->where('nis','=',$nis)->get();
@@ -80,8 +87,16 @@ use Illuminate\Database\Eloquent\Model;
             ->rightJoin('tb_pelatih','tb_anggota_ekskul.kode_ekskul','=','tb_pelatih.kode_ekskul')
             ->rightJoin('tb_pembimbing','tb_anggota_ekskul.kode_ekskul','=','tb_pembimbing.kode_ekskul')
             ->where('tb_ekskul.kode_ekskul','=',$kode_ekskul)
-            ->select('tb_ekskul.nama_ekskul','tb_ekskul.kode_ekskul','tb_pelatih.nama_pelatih','tb_pembimbing.nama_pembimbing','users.nama','users.kelas','users.jenis_kelamin')->get();
+            ->select('tb_ekskul.kode_ekskul','tb_ekskul.nama_ekskul','tb_ekskul.kode_ekskul','tb_pelatih.nama_pelatih','tb_pembimbing.nama_pembimbing','users.nama','users.kelas','users.jenis_kelamin')->get();
             
+        return $data;
+    }
+    public function getAnggotaEkskul($kode_ekskul){
+        $data = DB::table('tb_anggota_ekskul')
+        ->join('users','tb_anggota_ekskul.nis','=','users.nis')
+        ->where('tb_anggota_ekskul.kode_ekskul','=',$kode_ekskul)
+        ->select('tb_anggota_ekskul.nilai','tb_anggota_ekskul.kode_ekskul','tb_anggota_ekskul.jabatan','users.nis','users.nama','users.kelas','users.jenis_kelamin')
+        ->get();
         return $data;
     }
     public function InsertAnggotaEkskul($nis,$kode_ekskul){
@@ -91,5 +106,69 @@ use Illuminate\Database\Eloquent\Model;
              'jabatan' => 'anggota',
              'status' => 'diterima',
         ]);    
+    }
+    public function tambahPesanEkskul($judul,$tujuan,$pengirim,$konten){
+        DB::table('tb_artikel')->insert([
+            'kode_artikel' => str_random(5),
+            'judul' => $judul,
+            'tujuan' => $tujuan,
+            'pengirim' => $pengirim,
+            'konten' => $konten,
+            'status'=> 'belum dibaca'
+            
+       ]);   
+    } 
+    public function tambahPrestasiEkskul($kode_ekskul,$nama_prestasi,$juara,$tingkat,$keterangan){
+        DB::table('tb_prestasi_ekskul')->insert([
+            'kode_prestasi' => str_random(5),
+            'kode_ekskul' => $kode_ekskul,
+            'nama_prestasi' => $nama_prestasi,
+            'juara' => $juara,
+            'tingkat' => $tingkat,
+            'keterangan' => $keterangan,
+            
+       ]);  
+    }
+    public function hapusAnggota($nis,$kode_ekskul){
+        DB::table('tb_anggota_ekskul')
+        ->where('nis','=',$nis)
+        ->where('kode_ekskul','=',$kode_ekskul)
+        ->delete();
+    }
+    public function tambahNilaiAnggota($nis,$kode_ekskul,$nilai){
+        DB::table('tb_anggota_ekskul')
+        ->where('nis','=',$nis)
+        ->where('kode_ekskul','=',$kode_ekskul)
+        ->update(['nilai' => $nilai]);
+    }
+    public function gantiKetuaEkskul($nis,$kode_ekskul){
+        DB::table('tb_anggota_ekskul')
+        ->where('kode_ekskul','=',$kode_ekskul)
+        ->where('jabatan','=','ketua')
+        ->update(['jabatan' => 'anggota']);
+
+        DB::table('tb_anggota_ekskul')
+        ->where('nis','=',$nis)
+        ->where('kode_ekskul','=',$kode_ekskul)
+        ->update(['jabatan' => 'ketua']);
+    }
+    public function getPrestasi($kode_ekskul){
+       $data = DB::table('tb_prestasi_ekskul')
+        ->where('kode_ekskul','=',$kode_ekskul)
+        ->get();
+        return $data;
+    }
+
+    public function getDetailEkskul($kode_ekskul){
+        $data = DB::table('tb_ekskul')
+        ->where('kode_ekskul','=',$kode_ekskul)
+        ->first();
+        return $data;
+    }
+    public function editDeskripsi($nama_ekskul,$deskripsi,$kode_ekskul){
+        DB::table('tb_ekskul')
+        
+        ->where('kode_ekskul','=',$kode_ekskul)
+        ->update(['deskripsi' => $deskripsi]);
     }
 }

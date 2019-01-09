@@ -21,7 +21,8 @@ class EkskulController extends Controller
         if (Auth::check()) {
             $data['datauser'] = $ek->getDataEkskulUser(Auth::user()->nis);
             return view('halaman.listekskul')->with($data);
-
+            $dt = $ek->getDataEkskulUser3(Auth::user()->nis);
+            Session::put('kode_ekskul',$dt->kode_ekskul);               
         } else {
             $data['datauser'] = 'kosong';
             return view('halaman.listekskul')->with($data);
@@ -66,5 +67,10 @@ class EkskulController extends Controller
         
         $data->InsertAnggotaEkskul(Auth::user()->nis,$request->kode_ekskul);
         return 'data berhasil ditambahkan';
+    }
+    public function prestasiEkskul($kode_ekskul){
+        $ek = new Ekskul;
+        $data['alldata'] = $ek->getPrestasi($kode_ekskul);
+        return view('halaman.prestasi-ekskul')->with($data);
     }
 }

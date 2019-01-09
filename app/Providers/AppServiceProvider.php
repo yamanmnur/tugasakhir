@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 use App\Ekskul;
 use Auth;
+use Session;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -33,6 +34,7 @@ class AppServiceProvider extends ServiceProvider
                 }
                 if ($num == "ketua") {
                     $dat = $data->getDataEkskulKetua(Auth::user()->nis);
+                    Session::put('kode_ekskul',$dat[0]->kode_ekskul);
                     $view->with('nama_ekskul',$dat[0]->nama_ekskul);
                     $view->with('basoikan','ketua');    
                 } else {

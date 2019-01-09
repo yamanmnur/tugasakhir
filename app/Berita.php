@@ -12,8 +12,7 @@ class Berita extends Model
 {
     public function getPesan(){
         $data =  DB::table('tb_artikel')
-        ->where('tujuan','=','semua')
-        ->get();
+         ->get();
         
     return $data;
     }

@@ -16,8 +16,9 @@ Berita
                   <table class="table align-items-center table-dark table-flush">
                     <thead class="thead-dark">
                       <tr>
-                        <th scope="col">Judul</th>
-                        <th scope="col">Pengirim</th>
+                        <th scope="col">nama prestasi</th>
+                        <th scope="col">juara</th>
+                        <th scope="col">tingkat</th>
                         
                         <th scope="col"></th>
                       </tr>
@@ -27,12 +28,14 @@ Berita
         
                       <tr>
                         <th scope="row">
-                            {{ $item->judul }}
+                            {{ $item->nama_prestasi }}
                         </th>
                         <td>
-                            {{ $item->pengirim }}
+                            {{ $item->juara }}
                         </td>
-                
+                        <td>
+                            {{ $item->tingkat }}
+                        </td>
                         <td class="text-right">
                           <a href="#" class="btn btn-info">detail</a>
                         </td>

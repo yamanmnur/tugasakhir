@@ -117,6 +117,8 @@
               <hr class="my-4">
               <p>Ryan — the name taken by Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs and records all of his own music.</p>
             <a href="#">Apa Itu Ekskul : {{ $detailEkskul[0]->nama_ekskul }}</a>
+            <br>
+            <a href="{{ route('prestasi.ekskul',$detailEkskul[0]->kode_ekskul) }}">prestasi : {{ $detailEkskul[0]->nama_ekskul }}</a>
             </div>
           </div>
         </div>

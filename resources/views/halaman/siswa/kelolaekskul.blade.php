@@ -131,7 +131,7 @@
                         </div>
                         <p class="mt-3 mb-0 text-muted text-sm text-right">
             
-                            <span class="text-nowrap"> <a href="#" class="btn btn-info shadow" >detail</a> </span>
+                            <span class="text-nowrap"> <a href=" {{ route('kelola.anggota.ekskul') }} " class="btn btn-info shadow" >Gunakan Fitur</a> </span>
                         </p>               
                        </div>
                     </div>
@@ -169,7 +169,7 @@
                             </div>
                             <p class="mt-3 mb-0 text-muted text-sm text-right">
                 
-                                <span class="text-nowrap"> <a href="#" class="btn btn-info shadow" >detail</a> </span>
+                                <span class="text-nowrap"> <a href="{{ route('kelola.pesan') }}" class="btn btn-info shadow" >detail</a> </span>
                             </p>               
                            </div>
                         </div>
@@ -205,7 +205,7 @@
                                 </div>
                                 <p class="mt-3 mb-0 text-muted text-sm text-right">
                     
-                                    <span class="text-nowrap"> <a href="#" class="btn btn-info shadow" >detail</a> </span>
+                                    <span class="text-nowrap"> <a href="{{ route('kelola.prestasi') }}" class="btn btn-info shadow" >detail</a> </span>
                                 </p>               
                                </div>
                             </div>
@@ -241,7 +241,7 @@
                                     </div>
                                     <p class="mt-3 mb-0 text-muted text-sm text-right">
                         
-                                        <span class="text-nowrap"> <a href="#" class="btn btn-info shadow" >detail</a> </span>
+                                        <span class="text-nowrap"> <a href="{{ route('informasi.ekskul') }}" class="btn btn-info shadow" >detail</a> </span>
                                     </p>               
                                    </div>
                                 </div>
@@ -274,7 +274,7 @@
                                     </div>
                                     <p class="mt-3 mb-0 text-muted text-sm text-right">
                         
-                                        <span class="text-nowrap"> <a href="#" class="btn btn-info shadow" >detail</a> </span>
+                                        <span class="text-nowrap"> <a href="{{ route('informasi.ekskul') }}" class="btn btn-info shadow" >detail</a> </span>
                                     </p>               
                                    </div>
                                 </div>

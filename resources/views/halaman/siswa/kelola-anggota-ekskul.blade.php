@@ -1,6 +1,6 @@
 @extends('layouts.main')
 @section('judulhalaman')
-Berita
+Kelola Anggota Ekskul
 @endsection
 @section('header')
 <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
@@ -10,34 +10,60 @@ Berita
             <div class="col">
               <div class="card bg-default shadow">
                 <div class="card-header bg-transparent border-0">
-                  <h3 class="text-white mb-0">Berita</h3>
-                 </div>
+                  <h3 class="text-white mb-0">daftar anggota kamu</h3>
+                </div>
                 <div class="table-responsive">
                   <table class="table align-items-center table-dark table-flush">
                     <thead class="thead-dark">
                       <tr>
-                        <th scope="col">Judul</th>
-                        <th scope="col">Pengirim</th>
+                        <th scope="col">Nis</th>
+                        <th scope="col">Nama Anggota</th>
+                        <th scope="col">Kelas</th>
+                        <th scope="col">jenis Kelamin</th>
+                        <th scope="col">Nilai</th>
+                        <th scope="col">aksi</th>
                         
                         <th scope="col"></th>
                       </tr>
                     </thead>
                     <tbody>
-                        @foreach ($alldata as $item)
-        
+                        
+                        @foreach ($dataEkskul as $item)         
                       <tr>
                         <th scope="row">
-                            {{ $item->judul }}
+                            {{ $item->nis }}
                         </th>
                         <td>
-                            {{ $item->pengirim }}
+                            {{ $item->nama }}
                         </td>
-                
+                        <td>
+                            {{ $item->kelas }}
+                        </td>
+                        <td>
+                            {{ $item->jenis_kelamin }}
+                        </td>
+                        <td>
+                          {{ $item->nilai }}
+
+                        </td>
                         <td class="text-right">
-                          <a href="#" class="btn btn-info">detail</a>
+                        @if ($item->jabatan == 'ketua')
+                        <a href="#" class="btn btn-success">ketua ekskul</a>
+                        @else
+                            <a href="#" class="btn btn-warning">jadikan ketua</a>
+                        @endif
+                          <a href=" {{ route('form.tambah.nilai',$item->nis) }} " class="btn btn-success">beri nilai</a>
+                          <form action="{{ route('hapus.pesan') }}" method="post">
+                            @csrf
+
+                            <input type="text" name="nis" value="{{ $item->nis }}" hidden>
+                            <input type="text" name="kode_ekskul" id="" value="{{ $item->kode_ekskul }}" hidden>
+                            <input type="submit" value="hapus" class="btn btn-warning">
+                          </form>
+                          
                         </td>
                       </tr>
-                      @endforeach
+                         @endforeach
         
                     </tbody>
                   </table>
